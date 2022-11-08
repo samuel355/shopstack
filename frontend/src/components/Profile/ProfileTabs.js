@@ -5,6 +5,7 @@ import { updateUserProfile } from '../../Redux/Actions/UserActions'
 import Error from '../LoadingError/Error'
 import Loading from '../LoadingError/Loading'
 import Toast from '../LoadingError/Toast'
+import { listMyOrders } from '../../Redux/Actions/OrderActions';
 
 const ProfileTabs = () => {
     const [name, setName] = useState('')

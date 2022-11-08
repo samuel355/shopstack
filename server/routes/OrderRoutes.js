@@ -42,15 +42,15 @@ orderRouter.post(
 );
 
 //LOAD ORDERS FROM MONGOOSE DB
-orderRouter.get('/orders', asyncHandler(async(req, res) => {
-    const fetchOrders = await Order.find()
-    if(fetchOrders){
-        res.json(fetchOrders)
-    }else{
-        res.status(404)
-        throw new Error("Orders not Found")
-    }
-}))
+// orderRouter.get('/orders', asyncHandler(async(req, res) => {
+//     const fetchOrders = await Order.find()
+//     if(fetchOrders){
+//         res.json(fetchOrders)
+//     }else{
+//         res.status(404)
+//         throw new Error("Orders not Found")
+//     }
+// }))
 
 //LOAD SINGLE ORDER BY ID
 orderRouter.get('/orders/:id', protect, asyncHandler(async(req, res) => {
@@ -59,11 +59,19 @@ orderRouter.get('/orders/:id', protect, asyncHandler(async(req, res) => {
         "name email"
     )
     if(order){
-        res.json(order)
+        res.json(order) 
     }else{
         res.status(404)
         throw new Error("Order not Found")
     }
 }))
+
+//USER LOGIN ORDERS
+orderRouter.get('/orders', protect, asyncHandler(async(req, res) => {
+    const order = await Order.find({user: req.user._id}).sort({_id: -1})
+    
+    res.json(order)
+}))
+
 
 module.exports = orderRouter;

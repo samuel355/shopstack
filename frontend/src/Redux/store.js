@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { productDetailsReducer, productListReducer } from './Reducers/ProductReducers';
 import { cartReducer } from './Reducers/CartReducers';
 import { registerUserReducer, userDetailsReducer, userLoginReducer, userUpdateProfileReducer } from './Reducers/UserReducers';
-import { createOrderReducer, orderDetailsReducer } from './Reducers/OrderReducers';
+import { createOrderReducer, orderDetailsReducer, orderListMyReducer } from './Reducers/OrderReducers';
 
 const reducer = combineReducers({
     productList : productListReducer,
@@ -15,7 +15,8 @@ const reducer = combineReducers({
     userDetails : userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
     createOrder: createOrderReducer,
-    orderDetails: orderDetailsReducer
+    orderDetails: orderDetailsReducer,
+    myOrdersList : orderListMyReducer
 });
 
 //Get Cart Items in Local Storage

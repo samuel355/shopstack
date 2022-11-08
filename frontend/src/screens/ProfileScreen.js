@@ -5,6 +5,7 @@ import ProfileTabs from '../components/Profile/ProfileTabs'
 import Orders from '../components/Profile/Orders'
 import { getUserDetails } from '../Redux/Actions/UserActions'
 import moment from 'moment'
+import { listMyOrders } from '../Redux/Actions/OrderActions'
 
 const ProfileScreen = () => {
     const [ordersTab, setOrdersTab] = useState(true)
@@ -22,6 +23,13 @@ const ProfileScreen = () => {
         setProfileTab(false)
         setOrdersTab(true)
     }
+
+    const myOrdersList = useSelector((state) => state.myOrdersList)
+    const {loading, error, orders} = myOrdersList
+
+    useEffect(() => {
+        dispatch(listMyOrders())
+    }, [dispatch])
 
     useEffect(() => {
       dispatch(getUserDetails(''))
@@ -49,7 +57,7 @@ const ProfileScreen = () => {
                         </div>
                     </div>
                     <div className="wizard pt-3">
-                        <button style={{width: '80%', marginBottom: '10px', border: 'none', margin: '10px'}} onClick={() => handleOrdersTab()} className={`nav-link ${ordersTab ? 'active' : ''}`} >Orders List</button>
+                        <button style={{width: '80%', marginBottom: '10px', border: 'none', margin: '10px'}} onClick={() => handleOrdersTab()} className={`nav-link ${ordersTab ? 'active' : ''}`} >Orders List <span style={{color: 'red', fontWeight: 'bold'}}>{orders ? orders.length : 0}</span> </button>
                         <button style={{width: '80%', marginBottom: '10px', border: 'none', margin: '10px'}}  onClick={() => handleProfileTab()} className={`nav-link ${profileTab ? 'active' : ''}`}>Profile</button>
                     </div>
                 </div>
@@ -57,7 +65,7 @@ const ProfileScreen = () => {
                 <div className=' col-lg-8 pb-5 pt-lg-0 pt-3'>
                     {
                         ordersTab && (
-                           <Orders />
+                           <Orders orders = {orders} loading={loading} error={error} />
                         )
                     }
                     {
