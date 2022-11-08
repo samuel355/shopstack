@@ -16,11 +16,20 @@ const Register = () => {
     const registerUser = useSelector((state) => state.registerUser)
     const {error, loading, userInfo } = registerUser
 
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo: loginUserInfo } = userLogin
+
     useEffect(() => {
       if (userInfo) {
         navigation('/')
       }
     }, [dispatch, userInfo, navigation])
+
+    useEffect(() =>{
+        if(loginUserInfo){
+            navigation('/')
+        }
+    }, [loginUserInfo, navigation])
 
     const registerHandler = (e) => {
         e.preventDefault()
