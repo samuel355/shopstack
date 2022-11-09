@@ -1,13 +1,13 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { Link, useNavigate  } from 'react-router-dom'
 import { logout } from '../Redux/Actions/UserActions'
 
 const Header = () => {
-    //const navigation  = useNavigate()
-    //redirect users from getting back to login screen after successful login
-    //const redirect  = navigation.search ? navigation.search.split("=")[1] : "/"
-    
+
+    const [keyword, setKeyword] = useState('')
+    let navigate = useNavigate()
+
     const cart = useSelector((state) => state.cart)
     const { cartItems } = cart
 
@@ -15,15 +15,18 @@ const Header = () => {
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
 
-    // useEffect(() => {
-    //   if (userInfo) {
-    //     navigation(redirect)
-    //   }
-    // }, [dispatch, userInfo, navigation, redirect])
-
     const logoutHandler =(e) => {
         e.preventDefault()
         dispatch(logout())
+    }
+
+    const searchHandler = (e) => {
+        e.preventDefault()
+        if(keyword.trim()){
+            navigate(`/search/${keyword}`)
+        }else{
+            navigate(`/`)
+        }
     }
 
     return (
@@ -81,8 +84,8 @@ const Header = () => {
                                     </Link>
                                 </div>
                                 <div className="col-12 d-flex align-items-center mb-5 py-sm-4">
-                                    <form className="input-group form">
-                                        <input type="search" className='form-control rounded search' placeholder='Search' />
+                                    <form onSubmit={searchHandler} className="input-group form">
+                                        <input onChange={(e)=> setKeyword(e.target.value)}  type="search" className='form-control rounded search' placeholder='Search' />
                                         <button type='submit' className='search-button'>Search</button>
                                     </form>
                                 </div>
@@ -98,8 +101,8 @@ const Header = () => {
                             <Link className='navbar-brand' to={'/'}><img src="/images/logo/logo.svg" alt="Logo" /></Link>
                         </div>
                         <div className="col-md-6 col-8 d-flex align-items-center">
-                            <form className="input-group">
-                                <input type="search" className='form-control rounded search' placeholder='Search' />
+                            <form onSubmit={searchHandler} className="input-group">
+                                <input onChange={(e)=> setKeyword(e.target.value)} type="search" className='form-control rounded search' placeholder='Search' />
                                 <button type='submit' className='search-button'>Search</button>
                             </form>
                         </div>

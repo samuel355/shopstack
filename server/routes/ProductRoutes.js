@@ -7,7 +7,15 @@ const productRouter = express.Router()
 
 //LOAD PRODUCTS FROM MONGOOSE DB
 productRouter.get('/products', asyncHandler(async(req, res) => {
-    const fetchProducts = await Product.find()
+    const keyword = req.query.keyword ? {
+        name: {
+            $regex: req.query.keyword,
+            $options: "i"
+        },
+
+    }: {};
+    
+    const fetchProducts = await Product.find({...keyword})
     res.json(fetchProducts)
 }))
 

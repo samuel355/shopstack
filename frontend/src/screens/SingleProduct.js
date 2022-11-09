@@ -38,7 +38,6 @@ const SingleProduct = () => {
 
     useEffect(() => {
         if(success){
-            alert("Review Submitted")
             setRating(0)
             setComment("")
         }
@@ -66,6 +65,8 @@ const SingleProduct = () => {
             rating, 
             comment
         }))
+        alert("Review Submitted")
+        document.location.reload(true)
     }
      
     return (
@@ -134,6 +135,9 @@ const SingleProduct = () => {
                                 <div className="col-md-6">
                                     <h6 className="mb-3">REVIEWS</h6>
                                     {
+                                        reviewLoading ? (<Loading /> ) : reviewError && (<Error variant="alert-danger"> {reviewError}</Error>) 
+                                    }
+                                    {
                                         product.reviews.length === 0 ? (
                                             <Message variant={`alert-info mt-3`} > No Reviews For this product. Add a Review below </Message>
                                         ): (
@@ -162,7 +166,7 @@ const SingleProduct = () => {
                                                     <p className="text-align-center">Please <Link to={'/login'}> Login</Link> to add your review to this product</p>
                                                 </p>
                                             </div>
-                                        ): reviewLoading ? (<Loading /> ) : reviewError ? (<Error variant="alert-danger"> {reviewError}</Error>) : 
+                                        ): 
                                         (
                                             <form action="" onSubmit={submitReviewHandler}>
                                                 <div className="my-4">
