@@ -20,8 +20,7 @@ const Header = () => {
         dispatch(logout())
     }
 
-    const searchHandler = (e) => {
-        e.preventDefault()
+    const searchHandler = () => {
         if(keyword.trim()){
             navigate(`/search/${keyword}`)
         }else{
@@ -84,8 +83,15 @@ const Header = () => {
                                     </Link>
                                 </div>
                                 <div className="col-12 d-flex align-items-center mb-5 py-sm-4">
-                                    <form onSubmit={searchHandler} className="input-group form">
-                                        <input onChange={(e)=> setKeyword(e.target.value)}  type="search" className='form-control rounded search' placeholder='Search' />
+                                    <form className="input-group form">
+                                        <input 
+                                            onChange={
+                                                (e)=> {
+                                                    setKeyword(e.target.value)
+                                                    searchHandler()
+                                                }
+                                            } 
+                                            type="search" className='form-control rounded search' placeholder='Search' />
                                         <button type='submit' className='search-button'>Search</button>
                                     </form>
                                 </div>
@@ -101,8 +107,16 @@ const Header = () => {
                             <Link className='navbar-brand' to={'/'}><img src="/images/logo/logo.svg" alt="Logo" /></Link>
                         </div>
                         <div className="col-md-6 col-8 d-flex align-items-center">
-                            <form onSubmit={searchHandler} className="input-group">
-                                <input onChange={(e)=> setKeyword(e.target.value)} type="search" className='form-control rounded search' placeholder='Search' />
+                            <form className="input-group">
+                                <input 
+                                    onChange={
+                                        (e)=> {
+                                            setKeyword(e.target.value)
+                                            searchHandler()
+                                        }
+                                    }
+                                    
+                                    type="search" className='form-control rounded search' placeholder='Search' />
                                 <button type='submit' className='search-button'>Search</button>
                             </form>
                         </div>
