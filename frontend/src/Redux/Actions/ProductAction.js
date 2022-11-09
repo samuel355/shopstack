@@ -10,7 +10,8 @@ export const listProduct = (keyword = " ", pageNumber = " ") => async (dispatch)
             type: PRODUCT_LIST_REQUEST
         });
 
-        const {data} = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+        //const {data} = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+        const {data} = await axios.get(`/api/products?keyword=${keyword}`)
 
         dispatch({
             type: PRODUCT_LIST_SUCCESS,
