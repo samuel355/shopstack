@@ -6,8 +6,10 @@ import Orders from '../components/Profile/Orders'
 import { getUserDetails } from '../Redux/Actions/UserActions'
 import moment from 'moment'
 import { listMyOrders } from '../Redux/Actions/OrderActions'
+import {useNavigate } from 'react-router-dom'
 
 const ProfileScreen = () => {
+    const navigate = useNavigate()
     const [ordersTab, setOrdersTab] = useState(true)
     const [profileTab, setProfileTab] = useState(false)
 
@@ -26,6 +28,13 @@ const ProfileScreen = () => {
 
     const myOrdersList = useSelector((state) => state.myOrdersList)
     const {loading, error, orders} = myOrdersList
+
+    useEffect(() => {
+      if(userInfo === null){
+        navigate('/login')
+      }
+    }, [userInfo, navigate])
+    
 
     useEffect(() => {
         dispatch(listMyOrders())
@@ -52,7 +61,7 @@ const ProfileScreen = () => {
                             </h5>
                             <p className="author-card-position"  style={{textAlign: 'right'}}>
                                 {/* actual date Joined {moment(userInfo.createdAt).format('LL')} */}
-                                Joined: {moment(userInfo.createdAt, "YYYYMMDD").fromNow()}
+                                Joined: {moment(userInfo?.createdAt, "YYYYMMDD").fromNow()}
                             </p>
                         </div>
                     </div>
