@@ -9,10 +9,11 @@ import { useParams } from 'react-router-dom'
 const HomeScreen = () => {
     const params = useParams()
     const keyword = params.keyword
+    const pageNumber = params.pageNumber
     return (
         <>
             <Header />  
-            <ShoppingSection keyword ={keyword} />
+            <ShoppingSection keyword ={keyword} pageNumber={pageNumber} />
             <CallToAction />
             <ContactInfo />
             <Footer />
