@@ -5,7 +5,7 @@ import { logout } from '../Redux/Actions/UserActions'
 
 const Header = () => {
 
-    const [keyword, setKeyword] = useState('')
+    const [keyword, setKeyword] = useState()
     let navigate = useNavigate()
 
     const cart = useSelector((state) => state.cart)
@@ -24,7 +24,7 @@ const Header = () => {
         if(keyword.trim()){
             navigate(`/search/${keyword}`)
         }else{
-            navigate(`/`)
+            navigate()
         }
     }
 
